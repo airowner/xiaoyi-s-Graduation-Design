@@ -1,0 +1,101 @@
+$def with (main, right)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" lang="zh">
+
+<head>
+
+<title>$title</title>
+
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="author" content="chenyi" />
+<meta name="description" content="个人简介,简历,求职" />
+<meta name="keywords" content="简历" />
+<meta name="robots" content="index, follow, noarchive" />
+<meta name="googlebot" content="noarchive" />
+
+<link rel="stylesheet" type="text/css" media="screen" href="/static/css/screen.css" />
+
+</head>
+
+<body>
+
+<!--header -->
+<div id="header-wrap"><div id="header">
+
+	<a name="top"></a>
+
+	<h1 id="logo-text"><a href="index.html" title="">coolblue</a></h1>
+	<p id="slogan">Just Another Styleshout CSS Template... </p>
+
+	<div  id="nav">
+		<ul>
+			<li id="current"><a href="index.html">Home</a></li>
+			<li><a href="style.html">Style Demo</a></li>
+			<li><a href="blog.html">Blog</a></li>
+			<li><a href="archives.html">Archives</a></li>
+			<li><a href="index.html">Support</a></li>
+			<li><a href="index.html">About</a></li>
+		</ul>
+	</div>
+
+   <p id="rss">
+      <a href="index.html">Grab the RSS feed</a>
+   </p>
+
+   <form id="quick-search" method="get" action="index.html">
+      <fieldset class="search">
+         <label for="qsearch">Search:</label>
+         <input class="tbox" id="qsearch" type="text" name="qsearch" value="Search..." title="Start typing and hit ENTER" />
+         <button class="btn" title="Submit Search">Search</button>
+      </fieldset>
+   </form>
+
+<!--/header-->
+</div></div>
+	
+<!-- content-outer -->
+<div id="content-wrap" class="clear" >
+
+	<!-- content -->
+   <div id="content">
+
+   	<!-- main -->
+	   <div id="main">
+		   $:main
+        <!-- /main -->
+		</div>
+
+      <!-- sidebar -->
+		<div id="sidebar">
+		   $: right
+		</div>
+
+    <!-- content -->
+	</div>
+
+<!-- /content-out -->
+</div>
+
+<!-- footer-bottom -->
+<div id="footer-bottom">
+
+	<p class="bottom-left">
+		&copy; 2010 <strong>Copyright Info</strong>&nbsp; &nbsp; &nbsp;
+		<a href="http://www.cssmoban.com/" title="Website Templates">website templates</a> from <a href="http://www.cssmoban.com/">缃戠珯妯℃澘</a>
+	</p>
+
+	<p class="bottom-right">
+		<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> |
+	   <a href="http://validator.w3.org/check/referer">XHTML</a>	|
+		<a href="index.html">Home</a> |
+		<a href="index.html">Sitemap</a> |
+		<a href="index.html">RSS Feed</a> |
+      <strong><a href="#top">Back to Top</a></strong>
+   </p>
+
+<!-- /footer-bottom-->
+</div>
+
+</body>
+</html>
