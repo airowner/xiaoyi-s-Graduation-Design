@@ -1,12 +1,12 @@
-$def with (main, right)
+$def with (info, main, right)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" lang="zh">
 <head>
-<title>$title</title>
+<title>$info['title']</title>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="author" content="chenyi" />
-<meta name="description" content="���˼��,����,��ְ" />
-<meta name="keywords" content="����" />
+<meta name="description" content="个人简介,简历,求职" />
+<meta name="keywords" content="简历" />
 <meta name="robots" content="index, follow, noarchive" />
 <meta name="googlebot" content="noarchive" />
 <link rel="stylesheet" type="text/css" media="screen" href="/static/css/screen.css" />
@@ -15,19 +15,20 @@ $def with (main, right)
 <!--header -->
 <div id="header-wrap"><div id="header">
 	<a name="top"></a>
-	<h1 id="logo-text"><a href="index.html" title="">coolblue</a></h1>
-	<p id="slogan">Just Another Styleshout CSS Template... </p>
+	<h1 id="logo-text"><a href="index.html" title="陈怡的家">ChenYi's HOME</a></h1>
+	<p id="slogan">这里是陈怡的家, 介绍自己并抒发感情的地方... </p>
 	<div  id="nav">
 		<ul>
-			<li id="current"><a href="index.html">Home</a></li>
-			<li><a href="style.html">Style Demo</a></li>
-			<li><a href="blog.html">Blog</a></li>
-			<li><a href="archives.html">Archives</a></li>
-			<li><a href="index.html">Support</a></li>
-			<li><a href="index.html">About</a></li>
-		</ul>
+            $for ind, uri in enumerate(nav):
+                $if uri == _SERVER.path:
+                    <li id="current">
+                $else:
+                    <li>
+                <a href="$uri">$nav_name[ind]</a>
+                </li>
+    </ul>
 	</div>
-   <p id="rss">
+   <!--p id="rss">
       <a href="index.html">Grab the RSS feed</a>
    </p>
    <form id="quick-search" method="get" action="index.html">
@@ -36,7 +37,7 @@ $def with (main, right)
          <input class="tbox" id="qsearch" type="text" name="qsearch" value="Search..." title="Start typing and hit ENTER" />
          <button class="btn" title="Submit Search">Search</button>
       </fieldset>
-   </form>
+   </form-->
 <!--/header-->
 </div></div>
 	
@@ -51,7 +52,7 @@ $def with (main, right)
 		</div>
       <!-- sidebar -->
 		<div id="sidebar">
-		   $: right
+		   $:right
 		</div>
     <!-- content -->
 	</div>
@@ -61,15 +62,13 @@ $def with (main, right)
 <!-- footer-bottom -->
 <div id="footer-bottom">
 	<p class="bottom-left">
-		&copy; 2010 <strong>Copyright Info</strong>&nbsp; &nbsp; &nbsp;
-		<a href="http://www.cssmoban.com/" title="Website Templates">website templates</a> from <a href="http://www.cssmoban.com/">网站模板</a>
+		&copy; 2012 <strong>Copyright Info</strong>&nbsp; &nbsp; &nbsp;
+		website templates from <a href="mailto:295387148@qq.com">陈怡</a>
 	</p>
 	<p class="bottom-right">
-		<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> |
-	   <a href="http://validator.w3.org/check/referer">XHTML</a>	|
-		<a href="index.html">Home</a> |
-		<a href="index.html">Sitemap</a> |
-		<a href="index.html">RSS Feed</a> |
+		<a href="http://www.w3school.com.cn/css/">CSS</a> |
+	    <a href="http://www.w3school.com.cn/xhtml/">XHTML</a>	|
+		<a href="/">Home</a> |
       <strong><a href="#top">Back to Top</a></strong>
    </p>
 <!-- /footer-bottom-->
