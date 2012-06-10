@@ -1,0 +1,33 @@
+﻿$def with (msgs)
+<div class="about-me">
+
+	<h3>关于我</h3>
+	<p>
+	<a href="/myprofile"><img src="images/gravatar.jpg" width="40" height="40" alt="小怡" class="float-left" /></a>
+        我是陈怡，一个聪明可爱的女孩，喜欢幻想，喜欢不同特色的东西，喜欢春天...
+	<a href="/myprofile">Learn more...</a>
+	</p>
+
+</div>
+
+<div class="sidemenu">
+
+	<h3>导航</h3>
+	<ul>
+            $for ind, uri in enumerate(nav):
+		<li><a href="$uri">$nav_name[ind]</a></li>
+	</ul>
+
+</div>
+
+<div class="popular">
+
+	<h3>最新评论</h3>
+	<ul>
+		$for result in msgs:
+			<li><a href="/message/$result.id">$result.title</a>
+			<br /><span>$timestringify(result.time)</span>
+			</li>
+	</ul>
+
+</div>

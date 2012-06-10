@@ -1,0 +1,127 @@
+﻿$def with (msgs, reply)
+<script type="text/javascript">
+function reply(text){
+	document.getElementById('rows').value = text;
+	document.getElementByid('name').focus();
+}
+</script>
+$if msgs:
+	<div class="post-bottom-section">
+
+		<h4>${len(reply)+1} 个留言</h4>
+
+		<div class="right">
+
+			<ol class="commentlist">
+
+				<li class="depth-1">
+
+				<div class="comment-info">
+					<img alt="" src="/static/images/gravatar.jpg" class="avatar" height="40" width="40" />
+					<cite>
+						<a href="/message/$msgs.id">$msgs.user</a> 说: <br />
+						<span class="comment-data"><a href="/message/$msgs.id" title="$msgs.title">$timestringify(msgs.time)</a></span>
+					</cite>
+				</div>
+
+				<div class="comment-text">
+					<p>$msgs.title</p>
+
+					<div class="reply">
+						<a rel="nofollow" class="comment-reply-link" href="javascript:void(0)" onclick="replay('$msgs.id')">Reply</a>
+					</div>
+				</div>
+
+
+				</li>
+
+			$for i in reply:
+				$if loop.odd:
+					<li class="thread-alt depth-1">
+				$else:
+					<li class="depth-1">
+
+				<div class="comment-info">
+					<img alt="" src="/static/images/gravatar.jpg" class="avatar" height="40" width="40" />
+					<cite>
+						<a href="/message/$msgs.id">$i.user</a> 说: <br />
+						<span class="comment-data"><a href="/message/$msgs.id" title="$i.title">$timestringify(i.time)</a></span>
+					</cite>
+				</div>
+
+				<div class="comment-text">
+
+					<p>$i.title</p>
+
+					<div class="reply">
+						<a rel="nofollow" class="comment-reply-link" href="javascript:void(0)" onclick="replay('$i.id')">Reply</a>
+					</div>
+				</div>
+				$if i.message:
+					$if i.message == msgs.id:
+						$ r = msgs
+					$else:
+						$ r = [ rep for rep in reply if rep.id == i.message ][0]
+					
+					<ul class="children">
+
+						<li class="depth-2">
+
+						<div class="comment-info">
+							<img alt="" src="/static/images/gravatar.jpg" class="avatar" height="40" width="40" />
+							<cite>
+								<a href="/message/$msgs.id">$r.user</a> 说: <br />
+								<span class="comment-data"><a href="/message/$msgs.id" title="$r.title">$timestringify(r.time)</a></span>
+							</cite>
+						</div>
+
+						<div class="comment-text">
+							<p>$r.title</p>
+						</div>
+
+						</li>
+
+					</ul>
+
+
+				</li>
+
+			</ol>
+
+		</div>
+
+	</div>
+
+<div class="post-bottom-section">
+
+    <h4>留言</h4>
+
+    <div class="right">
+
+        <form action="/message" method="post" id="commentform">
+
+            <p>
+            <label for="name">您的姓名或昵称 (方便称呼您*)</label><br />
+            <input id="name" name="name" value="" type="text" tabindex="1" />
+            </p>
+            <p>
+            <label for="email">邮件地址 (方便联系您*)</label><br />
+            <input id="email" name="email" value="" type="text" tabindex="2" />
+            </p>
+            <p>
+            <label for="message">您的留言(*)</label><br />
+            <textarea id="message" name="message" rows="10" cols="20" tabindex="3"></textarea>
+            </p>
+            <p class="no-border">
+            <input class="button" type="submit" value="提 交" tabindex="5" />
+		    <input type="hidden" id="rows" name="rows" value="" />
+			$if msgs:
+				<input type="hidden" name="id" value="$msgs.id" />
+            </p>
+
+        </form>
+
+    </div>
+
+</div>
+
