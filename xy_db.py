@@ -9,6 +9,12 @@ def toUnicode(text):
         return unicode(text, 'utf-8')
     else:
         return unicode(str(text), 'utf-8')
+
+def toStr(text):
+    if type(text).__name__ == 'unicode':
+        return text.encode('utf-8')
+    else:
+        return str(text)
     
 class ExistsRecordError(Exception): pass
 
@@ -23,10 +29,10 @@ class XYDB:
             """
             category 分类
             parent   第一次发表为空，如果是回复，则这里是原消息的id字段
-            user     用户名
+            user     用户名
             email    用户email
             title    标题
-            time     添加时间戳
+            time     添加时间戳
             message  内容
             id       哈希， md5(category + user + title), 限制: 同一个用户再同一分类下不能发表目录名一致的文章
             """
@@ -50,13 +56,13 @@ class XYDB:
             self.addAlbum("陈怡", "295387148@qq.com", "校园风光")
 
 
-    def commonParam(self, category, user, email, title, **keys):
+    def insert(self, category, user, email, title, **keys):
         ret = {}
         ret['category'] = toUnicode(category)
         ret['user'] = toUnicode(user)
         ret['email'] = toUnicode(email)
         ret['title'] = toUnicode(title)
-        ret['id'] = XYDB.getID(category, user, title)
+        ret['id'] = XYDB.getID(ret['category'], ret['user'], ret['title'])
         if len(list(self.db.select('topic', where='category='+web.sqlquote(category)+' and id='+web.sqlquote(ret['id'])))):
             raise ExistsRecordError('record is exists')
         ret['time'] = int(time.time())
@@ -64,41 +70,41 @@ class XYDB:
         ret['message'] = ''
         for k, v in keys.items():
             ret[k] = toUnicode(v)
+
+        self.db.multiple_insert('topic', [ret])
+
         return ret
 
     #留言板
     def addLeavemsg(self, user, email, title, **keys):
-        return self.db.multiple_insert('topic', [self.commonParam('leavemsg', user, email, title, **keys)])
+        return self.insert(u'leavemsg', user, email, title, **keys)
     
     #课程
     def addCase(self, user, email, title, **keys):
-        return self.db.multiple_insert('topic', [self.commonParam('case', user, email, title, **keys)])
+        return self.db.multiple_insert('topic', [self.commonParam(u'case', user, email, title, **keys)])
 
     #相册
     def addAlbum(self, user, email, title, **keys):
-        return self.db.multiple_insert('topic', [self.commonParam('album', user, email, title, **keys)])
+        return self.db.multiple_insert('topic', [self.commonParam(u'album', user, email, title, **keys)])
 
     #个人能力
     def addPower(self, user, email, title, **keys):
-        return self.db.multiple_insert('topic', [self.commonParam('power', user, email, title, **keys)])
+        return self.db.multiple_insert('topic', [self.commonParam(u'power', user, email, title, **keys)])
 
     #个人简介
-    #def addProfiles(self, user, email, title, **keys):
-     #   return self.db.multiple_insert('topic', [self.commonParam('profile', user, email, title, **keys)])
+    def addProfiles(self, user, email, title, **keys):
+        return self.db.multiple_insert('topic', [self.commonParam(u'profile', user, email, title, **keys)])
 
     #求职意向
     def addJob(self, user, email, title, **keys):
-        return self.db.multiple_insert('topic', [self.commonParam('job', user, email, title, **keys)])
+        return self.db.multiple_insert('topic', [self.commonParam(u'job', user, email, title, **keys)])
 
 
     @staticmethod
     def getID(category, user, title):
-        print(category)
-        print(user)
-        print(title)
-        return hashlib.md5(category + user + title).hexdigest()
+        return hashlib.md5(toStr(category) + toStr(user) + toStr(title)).hexdigest()
 
-    def getCommon(self, category, **kws):
+    def getCommon(self, category, **kws):
         where = "category=" + web.sqlquote(category)
         if kws.has_key("where"):
             where += " and " + kws["where"]

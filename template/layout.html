@@ -1,4 +1,4 @@
-﻿$def with (info, main, right, __msg)
+﻿$def with (info, main, right)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" lang="zh">
 <head>
@@ -28,9 +28,9 @@
                 </li>
     </ul>
 	</div>
-   <p id="rss">
+   <!--p id="rss">
       <a href="index.html">Grab the RSS feed</a>
-   </p>
+   </p-->
    <form id="quick-search" method="get" action="index.html">
       <div id="__msg__" style="display:none;background-color:#FFF;color:red;font-size:22px;height:44px;line-height:44px;text-align:center"></div>
    </form>
@@ -78,7 +78,7 @@
     for (var i in q){
         q[i] = q[i].split('=');
         if(q[i][0] == 'msg'){
-            __msg.innerHTML = q[i][1];
+            __msg.innerHTML = decodeURIComponent(q[i][1]);
             __msg.style.display = '';
             setTimeout(function(){
                 __msg.style.display='none';

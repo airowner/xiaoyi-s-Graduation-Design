@@ -1,7 +1,8 @@
 ﻿# _*_ coding: utf-8 _*_
+import os, sys
 import web, xy_db
 
-import datetime
+import datetime, urllib, glob 
 
 
 urls = (
@@ -12,6 +13,7 @@ urls = (
     '/mypower', 'mypower', #个人能力
     '/myprofile', 'myprofile', #个人简介
     '/jobtarget', 'jobtarget', #求职意向
+    '/images', 'images', #图像
     )
 
 app = web.application(urls, globals())
@@ -32,8 +34,6 @@ render = web.template.render('template', globals=t_globals)
 _db = xy_db.XYDB()
 
 class base:
-    def __init__(self):
-        self.msg = web.input(msg='')
         
     def sidebar(self):
         return unicode(render.right(_db.getRight()))
@@ -49,7 +49,7 @@ class myphoto(base):
     def GET(self):
         info = {}
         info['title'] = '我的相薄'
-        left = render.style_main() 
+        left = render.myphoto() 
         return render.layout(info, left, self.sidebar())
 
 class message(base):
@@ -63,10 +63,13 @@ class message(base):
             msgs = list(_db.getLeavemsg(where='id='+web.sqlquote(tid)))[0]
             reply = _db.getLeavemsg(where='parent='+web.sqlquote(tid), order='time asc')
         left = unicode(render.message(msgs, list(reply)))
-        return render.layout(info, left, self.sidebar(), self.msg)
+        return render.layout(info, left, self.sidebar())
 
     def POST(self, tid=None):
-        data = web.input()
+        data = {}
+        for k, v in web.input().iteritems():
+            data[k] = v.strip()
+
         for k, v in web.ctx.iteritems():
             if k == 'environ':
                 refer = v['HTTP_REFERER']
@@ -74,42 +77,57 @@ class message(base):
         if not refer:
             refer = '/'
             
-        if not data.name or not data.email or not data.message:      
-            return web.seeother(refer + '?msg=评论失败')
+        if not data['name'] or not data['email'] or not data['message']:
+            return web.seeother(refer + '?msg=' + urllib.quote('评论失败'))
+
         parent = data.get('id', '')
-        _db.addLeavemsg(data.name, data.email, data.message, parent=parent, message=data.rows)
-        return web.seeother(refer + '?msg=评论成功')
+
+        ret = _db.addLeavemsg(data['name'], data['email'], data['message'], parent=parent, message=data['rows'])
+        if not ret['parent']:
+            web.seeother('/message/' + ret['id'] + '?msg=' + urllib.quote('评论成功'))
+        else:
+            web.seeother('/message/' + ret['parent'] + '?msg=' + urllib.quote('评论成功'))
 
 class case(base):
     def GET(self):
         info = {}
         info['title'] = '所学课程'
-        left = render.archives_main()
+        left = render.case()
         return render.layout(info, left, self.sidebar())
 
 class mypower(base):
     def GET(self):
         info = {}
         info['title'] = '个人能力'
-        left = ''
+        left = render.mypower()
         return render.layout(info, left, self.sidebar())
 
 class myprofile(base):
     def GET(self):
         info = {}
         info['title'] = '个人简介'
-        left = ''
+        left = render.myprofile()
         return render.layout(info, left, self.sidebar())
 
-class jobtarget:
+class jobtarget(base):
     def GET(self):
         info = {}
         info['title'] = '求职意向'
-        left = ''
+        left = render.archives_main()
         return render.layout(info, left, self.sidebar())
 
+class images:
+    def GET(self):
+        imgroot = os.path.abspath(os.path.curdir) + '/static/img'
+        httproot = web.ctx.homedomain + '/static/img/'
+        xml = '<?xml version="1.0" encoding="utf-8"?>\n<pics>\n'
+        for pic in glob.glob(imgroot + '/*'):
+            if os.path.isfile(pic) and os.path.splitext(pic)[1] in [ '.jpg', '.png' ]:
+                xml += '<pic src="' + httproot + os.path.basename(pic) + '" title="'+os.path.basename(pic)+'" />\n'
+        xml += '</pics>\n'
+        return xml
+
 if __name__ == '__main__':
-    import os, sys
     os.chdir(sys.path[0])
     
     #web.application.internalerror = web.debugerror
