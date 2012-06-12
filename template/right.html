@@ -14,8 +14,8 @@
 
 	<h3>导航</h3>
 	<ul>
-            $for ind, uri in enumerate(nav):
-		<li><a href="$uri">$nav_name[ind]</a></li>
+        $for ind, uri in enumerate(nav):
+            <li><a href="$uri">$nav_name[ind]</a></li>
 	</ul>
 
 </div>
@@ -24,10 +24,11 @@
 
 	<h3>最新评论</h3>
 	<ul>
-		$for result in msgs:
-			<li><a href="/message/$result.id">$result.title</a>
-			<br /><span>$timestringify(result.time)</span>
-			</li>
+        $for result in msgs:
+            $if not result.parent:
+                <li><a href="/message/$result.id">$result.title</a><br /><span>$timestringify(result.time)</span> </li>
+            $else:
+                <li><a href="/message/$result.parent">$result.title</a><br /><span>$timestringify(result.time)</span> </li>
 	</ul>
 
 </div>

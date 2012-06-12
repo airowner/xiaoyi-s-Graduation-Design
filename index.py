@@ -2,7 +2,7 @@
 import os, sys
 import web, xy_db
 
-import datetime, urllib, glob 
+import datetime, urllib, glob, re, time
 
 
 urls = (
@@ -12,7 +12,7 @@ urls = (
     '/case', 'case', #所学课程
     '/mypower', 'mypower', #个人能力
     '/myprofile', 'myprofile', #个人简介
-    '/jobtarget', 'jobtarget', #求职意向
+    #'/jobtarget', 'jobtarget', #求职意向
     '/images', 'images', #图像
     )
 
@@ -24,10 +24,12 @@ def Timestringify(timestamp):
 
 t_globals = {
         '_SERVER': web.ctx,
-        'nav': [ '/', '/myphoto', '/message', '/case', '/mypower', '/myprofile', '/jobtarget' ],
-        'nav_name': [ '首页', '我的相薄', '给我留言', '所学课程', '个人能力', '个人简介', '求职意向' ],
+        'nav': [ '/', '/myphoto', '/message', '/case', '/mypower', '/myprofile' ],
+        'nav_name': [ '首页', '我的相薄', '给我留言', '所学课程', '个人能力', '个人简介' ],
         'timestringify': Timestringify,
         'now': now,
+        're': re,
+        'time': time,
         }
 
 render = web.template.render('template', globals=t_globals)
@@ -42,7 +44,8 @@ class index(base):
     def GET(self):
         info = {}
         info['title'] = '首页'
-        left = render.style_main()
+        msgs = _db.getLeavemsg(where='parent=""', order='time asc', limit='10')
+        left = render.index(msgs)
         return render.layout(info, left, self.sidebar())
 
 class myphoto(base):

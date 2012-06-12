@@ -20,7 +20,7 @@
 	<div  id="nav">
 		<ul>
             $for ind, uri in enumerate(nav):
-                $if uri == _SERVER.path:
+                $if uri == '/' + _SERVER.path.split('/')[1]:
                     <li id="current">
                 $else:
                     <li>

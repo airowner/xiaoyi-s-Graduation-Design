@@ -14,77 +14,75 @@ $if msgs:
 
 			<ol class="commentlist">
 
-				<li class="depth-1">
+				<li class="depth-1" style="position:relative">
+                    <div class="comment-info">
+                        <cite>
+                            <a href="/message/$msgs.id">$msgs.user</a> 说: <br />
+                            <span class="comment-data"><a href="/message/$msgs.id" title="$msgs.title">$timestringify(msgs.time)</a></span>
+                        </cite>
+                    </div>
+                    <div class="comment-text">
+                        <p>$msgs.title</p>
 
-				<div class="comment-info">
-					<img alt="" src="/static/images/gravatar.jpg" class="avatar" height="40" width="40" />
-					<cite>
-						<a href="/message/$msgs.id">$msgs.user</a> 说: <br />
-						<span class="comment-data"><a href="/message/$msgs.id" title="$msgs.title">$timestringify(msgs.time)</a></span>
-					</cite>
-				</div>
-
-				<div class="comment-text">
-					<p>$msgs.title</p>
-
-					<div class="reply">
-						<a rel="nofollow" class="comment-reply-link" href="javascript:void(0)" onclick="replay('$msgs.id')">Reply</a>
-					</div>
-				</div>
-
-
+                        <div class="reply">
+                            <a rel="nofollow" class="comment-reply-link" href="javascript:void(0)" onclick="replay('$msgs.id')">Reply</a>
+                        </div>
+                    </div>
+                    <div class="left" style="position:absolute;right:0;top:0">
+                        <p class="dateinfo">$time.strftime('%b', time.gmtime(msgs.time))<span>$time.strftime('%d', time.gmtime(msgs.time))</span></p>
+                    </div>
 				</li>
 
-			$for i in reply:
-				$if loop.odd:
-					<li class="thread-alt depth-1">
-				$else:
-					<li class="depth-1">
+                $for i in reply:
+                    $if loop.odd:
+                        <li class="thread-alt depth-1" style="position:relative">
+                    $else:
+                        <li class="depth-1" style="position:relative">
 
-				<div class="comment-info">
-					<img alt="" src="/static/images/gravatar.jpg" class="avatar" height="40" width="40" />
-					<cite>
-						<a href="/message/$msgs.id">$i.user</a> 说: <br />
-						<span class="comment-data"><a href="/message/$msgs.id" title="$i.title">$timestringify(i.time)</a></span>
-					</cite>
-				</div>
+                    <div class="comment-info">
+                        <cite>
+                            <a href="/message/$msgs.id">$i.user</a> 说: <br />
+                            <span class="comment-data"><a href="/message/$msgs.id" title="$i.title">$timestringify(i.time)</a></span>
+                        </cite>
+                    </div>
+                    <div class="left" style="position:absolute;right:0;top:0">
+                        <p class="dateinfo">$time.strftime('%b', time.gmtime(i.time))<span>$time.strftime('%d', time.gmtime(i.time))</span></p>
+                    </div>
 
-				<div class="comment-text">
+                    <div class="comment-text">
 
-					<p>$i.title</p>
+                        <p>$i.title</p>
 
-					<div class="reply">
-						<a rel="nofollow" class="comment-reply-link" href="javascript:void(0)" onclick="replay('$i.id')">Reply</a>
-					</div>
-				</div>
-				$if i.message:
-					$if i.message == msgs.id:
-						$ r = msgs
-					$else:
-						$ r = [ rep for rep in reply if rep.id == i.message ][0]
-					
-					<ul class="children">
+                        <div class="reply">
+                            <a rel="nofollow" class="comment-reply-link" href="javascript:void(0)" onclick="replay('$i.id')">Reply</a>
+                        </div>
+                    </div>
+                    $if i.message:
+                        $if i.message == msgs.id:
+                            $ r = msgs
+                        $else:
+                            $ r = [ rep for rep in reply if rep.id == i.message ][0]
+                        
+                        <ul class="children">
 
-						<li class="depth-2">
+                            <li class="depth-2">
 
-						<div class="comment-info">
-							<img alt="" src="/static/images/gravatar.jpg" class="avatar" height="40" width="40" />
-							<cite>
-								<a href="/message/$msgs.id">$r.user</a> 说: <br />
-								<span class="comment-data"><a href="/message/$msgs.id" title="$r.title">$timestringify(r.time)</a></span>
-							</cite>
-						</div>
+                            <div class="comment-info">
+                                <img alt="" src="/static/images/gravatar.jpg" class="avatar" height="40" width="40" />
+                                <cite>
+                                    <a href="/message/$msgs.id">$r.user</a> 说: <br />
+                                    <span class="comment-data"><a href="/message/$msgs.id" title="$r.title">$timestringify(r.time)</a></span>
+                                </cite>
+                            </div>
 
-						<div class="comment-text">
-							<p>$r.title</p>
-						</div>
+                            <div class="comment-text">
+                                <p>$r.title</p>
+                            </div>
 
-						</li>
+                            </li>
 
-					</ul>
-
-
-				</li>
+                        </ul>
+                </li>
 
 			</ol>
 

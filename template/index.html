@@ -1,133 +1,36 @@
-﻿
-      	<div class="post">
+$def with (msgs)
+<h2><a href="javascript:">Welcome!</a></h2>
 
-      		<div class="right">
+<h3>这就是我</h3>
 
-            	<h2><a href="index.html">Read Me First</a></h2>
+<p><img src="/static/images/firefox-gray.jpg" width="100" height="120" alt="这就是我" class="float-left" />
+我叫陈怡，今年22岁。剩下自己编吧
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
+Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
+posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum
+odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra
+condimentum, lorem tellus eleifend magna, eget fringilla velit magna id neque. Curabitur vel urna.
+In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
+Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
+posuere nunc justo tempus leo.
+</p>
 
-               <p class="post-info">Filed under <a href="index.html">templates</a>, <a href="index.html">internet</a></p>
+<h3>我所关心的，所关心我的……</h3>
 
-               	<div class="image-section">
-              			<img src="/static/images/img-post.jpg" alt="image post" height="200" width="500"/>
-         	    	</div>
+<ul class="archive">
+    $for result in msgs:
+        $if not result.parent:
+            $ href = '/message/' + result.id
+        $else:
+            $ href = '/message/' + result.parent
+        <li>
+        <div class="post-title"><a href="$href">$result.title</a></div>
+        <div class="post-details">发表于 <a href="$href">$timestringify(result.time)</a> @ $result.user </div>
+        </li>
+</ul>
 
-               <p><strong>CoolBlue</strong> is a free, W3C-compliant, CSS-based website template
-					by <a href="http://www.cssmoban.com/">styleshout.com</a>. This work is
-					distributed under the <a rel="license" href="http://creativecommons.org/licenses/by/2.5/">
-					Creative Commons Attribution 2.5  License</a>, which means that you are free to
-					use and modify it for any purpose. All I ask is that you give me credit by including a <strong>link back</strong> to
-					<a href="http://www.cssmoban.com/">my website</a>.
-               </p>
+<!--div class="navigation clear">
+    <div><a href="#" >&laquo; Older Entries</a></div>
+    <div><a href="#" >Newer Entries &raquo; </a></div>
+</div-->
 
-               <p>
-               You can find more of my free template designs at <a href="http://www.cssmoban.com/">my website</a>.
-					For premium commercial designs, you can check out
-               <a href="#" title="Website Templates">DreamTemplate.com</a>.
-					</p>
-
-
-               <p><a class="more" href="index.html">continue reading &raquo;</a></p>
-
-            </div>
-
-            <div class="left">
-
-            	<p class="dateinfo">JAN<span>31</span></p>
-
-               	<div class="post-meta">
-                  	<h4>Post Info</h4>
-                     	<ul>
-                           <li class="user"><a href="#">Erwin</a></li>
-                           <li class="time"><a href="#">12:30 PM</a></li>
-                           <li class="comment"><a href="#">2 Comments</a></li>
-                           <li class="permalink"><a href="#">Permalink</a></li>
-                        </ul>
-						</div>
-
-            </div>
-
-			</div>
-
-         <div class="post">
-
-         	<div class="right">
-
-            	<h2><a href="index.html">Aliquam Risus Justo</a></h2>
-
-               <p class="post-info">Filed under <a href="index.html">templates</a>, <a href="index.html">internet</a></p>
-
-               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-					Cras id urna. Morbi tincidunt, orci ac <a href="index.html">convallis aliquam</a>, lectus turpis varius lorem, eu
-				   posuere nunc justo tempus leo.</p>
-
-				   <p>
-				   Donec mattis, purus nec placerat bibendum, <a href="index.html">dui pede condimentum</a>
-				   odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra
-				   condimentum, lorem tellus eleifend magna, <a href="index.html">eget fringilla velit</a> magna id neque. Curabitur vel urna.
-				   In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-				   Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
-				   posuere nunc justo tempus leo.</p>
-
-               <p><a class="more" href="index.html">continue reading &raquo;</a></p>
-
-            </div>
-
-            <div class="left">
-
-            	<p class="dateinfo">JAN<span>29</span></p>
-
-               <div class="post-meta">
-               	<h4>Post Info</h4>
-                  	<ul>
-                     	<li class="user"><a href="#">Erwin</a></li>
-                        <li class="time"><a href="#">10:30 PM</a></li>
-                        <li class="comment"><a href="#">5 comments</a></li>
-                        <li class="permalink"><a href="#">Permalink</a></li>
-                     </ul>
-					</div>
-
-            </div>
-
-			</div>
-
-         <div class="post">
-
-         	<div class="right">
-
-            	<h2><a href="index.html">Lorem Ipsum Dolor Sit Amet</a></h2>
-
-               <p class="post-info">Filed under <a href="index.html">templates</a>, <a href="index.html">internet</a></p>
-
-               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-					Cras id urna. Morbi tincidunt, orci ac <a href="index.html">convallis aliquam</a>, lectus turpis varius lorem, eu
-				   posuere nunc justo tempus leo.</p>
-
-				   <p>
-				   Donec mattis, purus nec placerat bibendum, <a href="index.html">dui pede condimentum</a>
-				   odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra
-				   condimentum, lorem tellus eleifend magna, <a href="index.html">eget fringilla velit</a> magna id neque. Curabitur vel urna.
-				   In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-				   Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
-				   posuere nunc justo tempus leo.</p>
-
-               <p><a class="more" href="index.html">continue reading &raquo;</a></p>
-
-            </div>
-
-            <div class="left">
-
-            	<p class="dateinfo">JAN<span>25</span></p>
-
-               <div class="post-meta">
-               	<h4>Post Info</h4>
-                  	<ul>
-                     	<li class="user"><a href="#">Erwin</a></li>
-                        <li class="time"><a href="#">11:30 AM</a></li>
-                        <li class="comment"><a href="#">7 comments</a></li>
-                        <li class="permalink"><a href="#">Permalink</a></li>
-                     </ul>
-					</div>
-
-            </div>
-
-			</div>
